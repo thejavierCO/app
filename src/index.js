@@ -17,8 +17,8 @@ app.use("/",require("./router/fb.js"));
 let io = socket.listen(app.listen(app.get('port'),()=>{console.log('run',app.get('port'))}));
 
 io.on("connection",(a)=>{
-    console.log(a.id);
+    a.emit("id",a.id);
     a.on("bot:telegram",(a)=>{
         io.emit("bot:telegram",a)
     })
-})
+});
