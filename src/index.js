@@ -19,6 +19,6 @@ let io = socket.listen(app.listen(app.get('port'),()=>{console.log('run',app.get
 io.on("connection",(a)=>{
     console.log(a.id);
     a.on("bot:telegram",(a)=>{
-        console.log(a)
+        io.emit("bot:telegram",a)
     })
 })
