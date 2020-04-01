@@ -5,7 +5,7 @@ const app = config.bot();
 
 const io = socket("http://localhost:8000");
 let id
-let { init ,getValue ,getValues,setValue,delValue,updateValue} = new db("chat");
+let chats = new db("chat");
 
 io.on("connect",()=>{
     io.on("id",(a)=>{
@@ -21,4 +21,5 @@ app.onText(/\/echo (.+)/,(a,b)=>{
 app.onText(/\/start/,(a,b)=>{
     let { text , message_id ,from ,chat } = a;
     app.sendMessage(chat.id,"init");
+    chats.setValue({chat:chat.id});
 })

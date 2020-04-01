@@ -6,9 +6,7 @@ class db{
     db;
     constructor(dbname){
         this.data = {name:dbname};
-        this.init().then(e=>{
-            console.log(e);
-        });
+        this.init();
     }
     init = async ()=>{
         this.data[this.data.name] = [];
@@ -19,39 +17,49 @@ class db{
         return db;
     }
     getValues = ()=>{
-        const tasks = this.db
-        .get(this.data.name)
-        .value();
-        return tasks;
+        if(this.db!=""){
+            const tasks = this.db
+            .get(this.data.name)
+            .value();
+            return tasks;
+        }
     }
     getValue = (id)=>{
-        const task = this.db
-        .get(this.data.name)
-        .find({id:id})
-        .value();
-        return task;
+        if(!this.db){            
+            const task = this.db
+            .get(this.data.name)
+            .find({id:id})
+            .value();
+            return task;
+        }
     };
     setValue = (json)=>{
-        json.id = v4();
-        this.db.get(this.data.name)
-        .push(json)
-        .write()
-        return json;
+        if(!this.db){
+            json.id = v4();
+            this.db.get(this.data.name)
+            .push(json)
+            .write()
+            return json;
+        }
     }
     updateValue = async (iddb,json)=>{
-        const result = await this.db
-        .get(this.data.name)
-        .find({id:iddb})
-        .assign(json)
-        .write()
-        return result
+        if(!this.db){
+            const result = await this.db
+            .get(this.data.name)
+            .find({id:iddb})
+            .assign(json)
+            .write()
+            return result
+        }
     }
     delValue = async (iddb)=>{
-        const result = await this.db
-        .get(this.data.name)
-        .remove({id:iddb})
-        .write()
-        return result;
+        if(!this.db){            
+            const result = await this.db
+            .get(this.data.name)
+            .remove({id:iddb})
+            .write()
+            return result;
+        }
     }
 }
 
