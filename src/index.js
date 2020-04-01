@@ -21,4 +21,7 @@ io.on("connection",(a)=>{
     a.on("bot:telegram",(a)=>{
         io.emit("bot:telegram",a)
     })
+    a.on("bot:add",(a)=>{
+        console.log(a);
+    })
 });
