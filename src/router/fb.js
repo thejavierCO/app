@@ -1,8 +1,9 @@
 const { Router } = require("express");
-const app = Router();
+//const { app } = require("../app/config");
+const r = Router();
 
-app.use("/",(req,res,next)=>{
+r.use("/",(req,res,next)=>{
     res.render("main");
 })
 
-module.exports = app;
+module.exports = r;
