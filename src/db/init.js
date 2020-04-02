@@ -1,24 +1,43 @@
-const low = require("lowdb");
-const fileasync = require("lowdb/adapters/FileAsync");
-const { v4 } = require("uuid");
+const low = require("lowdb"),{v4}=require("uuid"),fileasync=require("lowdb/adapters/FileAsync");
+
+class run{
+    constructor(name){
+        this.db = {db:name};
+        return ()=>this.init(name);
+    }
+    init = async (name)=>{
+        const adapter = new fileasync("db.json");
+        let data,db=await low(adapter);
+        data[name] = [];
+        db.defaults(data[name]).write();
+        this.db = ()=>db;
+    }
+}
 
 class db{
+    constructor(name){
+        let base = new run(name);
+    }
+}
+
+module.exports = db;
+
+//------------------------------------------------------------------------------------------------
+/*class db{
     db;
     constructor(dbname){
-        this.data = {name:dbname};
-        this.init();
+        this.db = ()=>getConnect();
     }
     init = async ()=>{
         this.data[this.data.name] = [];
         const adapter = new fileasync("db.json");
         let db = await low(adapter);
         db.defaults(this.data[this.data.name]).write();
-        this.db = db;
-        return db;
+        this.db = ()=>db;
     }
     getValues = ()=>{
         if(this.db!=""){
-            const tasks = this.db
+            const tasks = this.db()
             .get(this.data.name)
             .value();
             return tasks;
@@ -26,7 +45,7 @@ class db{
     }
     getValue = (id)=>{
         if(!this.db){            
-            const task = this.db
+            const task = this.db()
             .get(this.data.name)
             .find({id:id})
             .value();
@@ -36,15 +55,17 @@ class db{
     setValue = (json)=>{
         if(!this.db){
             json.id = v4();
-            this.db.get(this.data.name)
+            this.db().get(this.data.name)
             .push(json)
             .write()
             return json;
+        }else{
+            console.log(json)
         }
     }
     updateValue = async (iddb,json)=>{
         if(!this.db){
-            const result = await this.db
+            const result = await this.db()
             .get(this.data.name)
             .find({id:iddb})
             .assign(json)
@@ -54,13 +75,11 @@ class db{
     }
     delValue = async (iddb)=>{
         if(!this.db){            
-            const result = await this.db
+            const result = await this.db()
             .get(this.data.name)
             .remove({id:iddb})
             .write()
             return result;
         }
     }
-}
-
-module.exports = db;
+}*/
