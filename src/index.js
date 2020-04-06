@@ -18,10 +18,43 @@ let io = socket.listen(app.listen(app.get('port'),()=>{console.log('run',app.get
 
 io.on("connection",(a)=>{
     a.emit("id",a.id);
-    a.on("bot:telegram",(a)=>{
-        io.emit("bot:telegram",a)
+    a.on("chat:join",(b)=>{
+        switch(b.id){
+            case "bot":
+            a.join("bot",function(){
+                a.emit("msg",{"join":"bot"})
+            });
+            break;
+            default:
+            a.emit("warn",{result:"not exist"})
+        }
     })
-    a.on("bot:add",(a)=>{
-        console.log(a);
+    a.on("chat:bot",(b)=>{
+        let {id,msg} = b;
+        switch(id){
+            case "msg":
+                const { from , chat , date ,text} = msg;
+                let { last_name , first_name , username} = from;
+                let { id , title , type } = chat;
+                let data = {
+                    user:{
+                        name:first_name+" "+last_name,
+                        nickname:username
+                    },
+                    chat:{
+                        id:id,
+                        title:title,
+                        type:type
+                    },
+                    msg:text
+                }
+                io.to("bot").emit("msg",data);
+            break;
+            case "echo":
+                io.to("bot").emit("msg",msg);
+            break;
+            default:
+            a.emit("warn",{result:"not exist"})
+        }
     })
 });
