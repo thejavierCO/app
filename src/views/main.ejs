@@ -1,2 +1,15 @@
 <% layout("base") %>
-<input type="text" id="join">
+<div class="content">
+    <div class="box">
+        <input class="w-100" type="text" id="join">
+    </div>
+    <div class="box chat" id="chat">
+        <div class="box" id="u">
+            <div class="box" id="u-name">{nikename}</div>
+            <div class="box" id="u-msg">{msg}</div>
+        </div>
+    </div>
+    <div class="box msg">
+        <input class="w-100" type="text" id="msg">
+    </div>
+</div>

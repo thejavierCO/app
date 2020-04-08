@@ -4,3 +4,30 @@ body{
     margin:0px;
     padding:0px;
 }
+.content{
+    width: 50vw;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 25px auto 50px;
+    background: #fff;
+    margin: auto;
+    height: 100vh;
+    padding: 0px 10px 0px 10px;
+}
+.box{
+    border:1px solid #000;
+}
+.box > input{
+    background: #000;
+    color:#fff;
+    border:1px solid gray;
+}
+.w-100{
+    width: 100%;
+}
+#chat{
+    overflow: auto;
+}
+.chat > div{
+    background: red;
+}
