@@ -57,4 +57,7 @@ io.on("connection",(a)=>{
             a.emit("warn",{result:"not exist"})
         }
     })
+    a.on("chat:msg",(b)=>{
+        io.to("bot").emit("msg",b);
+    })
 });
