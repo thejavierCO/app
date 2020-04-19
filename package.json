@@ -7,7 +7,8 @@
     "start": "node src",
     "dev": "nodemon src --ignore db.json",
     "bot": "node src/app/bot.js",
-    "botdev": "nodemon src/app/bot.js --ignore db.json"
+    "botdev": "nodemon src/app/bot.js --ignore db.json",
+    "test":"node src/test"
   },
   "keywords": [],
   "author": "",
